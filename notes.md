@@ -1,5 +1,7 @@
 # Notes
 
+## 2023 12 05
+
 ```txt
 2023-12-05 20:52:01.571 [info] Default formatter is set to ms-python.python for workspace /home/nehir/works/wise2324/PROG1
 2023-12-05 20:52:01.571 [error] The setting "editor.defaultFormatter" for Python is set to "ms-python.python" which is deprecated.
