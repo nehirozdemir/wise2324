@@ -28,7 +28,7 @@ def power(exponent):
                 # We are editing the sequence
                 if sequence[index] < 0:
                     print("No negative numbers allowed")
-                    exit()
+                    return None
                 sequence[index] = number**exponent
                 index += 1
             return f(sequence)
