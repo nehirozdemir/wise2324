@@ -24,20 +24,15 @@ def power(exponent):
         def wrapped_f(*args):
             sequence = args[0]
             index = 0
-            negative_indicator = 0
             for number in sequence:
                 # We are editing the sequence
-                sequence[index] = number**exponent
                 if sequence[index] < 0:
-                    negative_indicator += 1
+                    print("No negative numbers allowed")
+                    exit()
+                sequence[index] = number**exponent
                 index += 1
-            if negative_indicator > 0:
-                print("No negative numbers allowed")
-            else:
-                f(sequence)
-
+            return f(sequence)
         return wrapped_f
-
     return wrap
 
 
@@ -66,5 +61,5 @@ def print_prod(sequence):
 if __name__ == "__main__":
     print_sum([1, 2, 3])
     print_prod([1, 2, 3])
-    print_sum([1, -2, 3])
-    print_prod([-1, 2, 3])
+    # print_sum([1, -2, 3])
+    # print_prod([-1, 2, 3])

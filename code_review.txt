@@ -1,0 +1,31 @@
+Hello Nehir,
+
+Take a look at the error message on Tutron. At the end it says:
+
+     Expected:201773941
+     Received: None
+
+If a function does not have a return statement, a
+return None added. That’s where the “None” comes from. The functions
+print_sum and print_prod have a return statement, but your
+Function wrapped_f has no return statement. print_sum and
+print_prod is called f within wrapped_f. Also hat
+f a return value, which you now want to use as the return value of wrapped_f
+must “forward”, for example like this:
+
+     if negative_indicator > 0:
+         print("No negative numbers allowed")
+         return_value = None
+     different:
+         return_value = f(sequence)
+     return return_value
+
+Does this help you? :) Decorators are confusing at first because man
+Pretty much has to jump around in the code to find the path of execution
+to understand.
+
+There is another small error in your code. The function should
+can be aborted if there is a negative number among the numbers passed
+is there. Not just after potentiation.
+
+Best regards
