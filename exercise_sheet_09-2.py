@@ -32,7 +32,9 @@ def power(exponent):
                 sequence[index] = number**exponent
                 index += 1
             return f(sequence)
+
         return wrapped_f
+
     return wrap
 
 
@@ -61,5 +63,5 @@ def print_prod(sequence):
 if __name__ == "__main__":
     print_sum([1, 2, 3])
     print_prod([1, 2, 3])
-    # print_sum([1, -2, 3])
-    # print_prod([-1, 2, 3])
+    print_sum([1, -2, 3])
+    print_prod([-1, 2, 3])
