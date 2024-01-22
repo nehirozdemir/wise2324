@@ -9,7 +9,6 @@ den einzelnen Aufgaben des Übungsblatts.
 
 """
 
-
 # Vorgegebener Code (Hier nichts verändern)
 
 EXAMPLE_GRID_1 = [
@@ -137,12 +136,13 @@ def game_loop():
 
 # Aufgabe 1
 def empty_grid():
+    """Returns emptiedgrid with zeros"""
     return EXAMPLE_GRID_1
 
 
 # Aufgabe 2
 def print_grid(grid):
-    # print("|")
+    """Prints game grid"""
     for row in grid:
         print("|", end="")
         for space in row:
@@ -159,39 +159,68 @@ def print_grid(grid):
 
 # Aufgabe 3
 def get_column(column_number, grid):
-    # TODO
-    pass
+    """Specifically returns the wanted coloumn"""
+    column_list = []
+    for row in grid:
+        index = 0
+        for column in row:
+            if column_number == index:
+                column_list.append(column)
+            index = index + 1
+    return column_list
 
 
 # Aufgabe 4
 def free_space(column_number, grid):
+    """Checks if there is free space in the wanted coloumn or not"""
     column = get_column(column_number, grid)
-    # TODO
-    pass
+    # column = get_column(1, EXAMPLE_GRID_2)
+    # 000002
+    # alttan yukarı giderken ilk bulduğun 0'ın yukarıdan ilkten başlayan index'i
+    index = 5
+    for item in reversed(column):
+        if item == 0:
+            return index
+        index = index - 1
+    return None
+
 
 # Aufgabe 5
 def grid_is_full(grid):
+    """Checks if the game has ended in a draw
+    by looking at empty spaces"""
     column_count = len(grid[0])
     for column_number in range(column_count):
-        # TODO
-        pass
+        if isinstance(free_space(column_number, grid), int):
+            return False
+    return True
+
 
 # Aufgabe 6
 def drop_disc(column_number, player, grid):
+    """Makes the disc drop into the specified coloumn"""
     row_number = free_space(column_number, grid)
-    # TODO
-    pass
+    if row_number is None:
+        return False
+    grid[row_number][column_number] = player
+    return True
+
 
 # Aufgabe 7
 def all_elements_equal(sequence):
-    # TODO
-    pass
+    "Checks if all elements are equal"
+    if sequence is None:
+        return False
+    if not isinstance(sequence, list):
+        return False
+    if len(set(sequence)) == 1:
+        return True
+    return False
 
 
 # Aufgabe 8
-
-
 def get_four_diagonal_up(row_number, column_number, grid):
+    """Checks upper diagonal (four units)"""
     # For function `get_four_diagonal_up` we might produce negative
     # list indices which are not allowed but don't raise `IndexError`.
     # Hint: This is not necessary for `get_four_diagonal_down`,
@@ -216,39 +245,39 @@ def get_four_diagonal_up(row_number, column_number, grid):
 
 
 def get_four_diagonal_down(row_number, column_number, grid):
+    """Checks lower diagonal (four units) """
     try:
         return [
-            # TODO
             grid[row_number][column_number],
-            grid[row_number - 1][column_number + 1],
-            grid[row_number - 2][column_number + 2],
-            grid[row_number - 3][column_number + 3],
+            grid[row_number + 1][column_number + 1],
+            grid[row_number + 2][column_number + 2],
+            grid[row_number + 3][column_number + 3],
         ]
     except IndexError:
         return None
 
 
 def get_four_horizontal(row_number, column_number, grid):
+    """Checks four units horizontal but to the right"""
     try:
         return [
-            # TODO
             grid[row_number][column_number],
-            grid[row_number - 1][column_number + 1],
-            grid[row_number - 2][column_number + 2],
-            grid[row_number - 3][column_number + 3],
+            grid[row_number][column_number + 1],
+            grid[row_number][column_number + 2],
+            grid[row_number][column_number + 3],
         ]
     except IndexError:
         return None
 
 
 def get_four_vertical(row_number, column_number, grid):
+    """Checks all four units down"""
     try:
         return [
-            # TODO
             grid[row_number][column_number],
-            grid[row_number - 1][column_number + 1],
-            grid[row_number - 2][column_number + 2],
-            grid[row_number - 3][column_number + 3],
+            grid[row_number + 1][column_number],
+            grid[row_number + 2][column_number],
+            grid[row_number + 3][column_number],
         ]
     except IndexError:
         return None
@@ -258,24 +287,36 @@ def get_four_vertical(row_number, column_number, grid):
 
 
 def next_player(player):
-    # TODO
-    pass
+    """Arranges next player"""
+    if player is None:
+        return 1
+    if player != 1:
+        return 1
+    if player == 1:
+        return 2
+    return 1
 
 
 # Aufgabe 10
 
 
 def player_choice(player, grid):
+    """Regulates what can be written as column input"""
     print("Next disc: Player {}".format(player))
     while True:
         player_input_str = input("Which column? ")
-        # Convert input to integer
-        player_input_int = int(player_input_str)
-        # List index starts at 0, so we have to subtract 1
-        column_number = player_input_int - 1
-        # Drop disc into selected column
-        if not drop_disc(column_number, player, grid):
-            print("Can not drop disc there")
+        if player_input_str in ["1", "2", "3", "4", "5", "6", "7"]:
+            # Convert input to integer
+            player_input_int = int(player_input_str)
+            # List index starts at 0, so we have to subtract 1
+            column_number = player_input_int - 1
+        try:
+            # Drop disc into selected column
+            if not drop_disc(column_number, player, grid):
+                print("Can not drop disc there")
+                continue
+        except NameError:
+            print("Enter a number between 1 and 7.")
             continue
         # No errors occurred, so we can break the loop
         break
@@ -284,13 +325,13 @@ def player_choice(player, grid):
 # Testaufrufe
 
 if __name__ == "__main__":
-    print("Test Aufgabe 1:")
-    print(empty_grid())
+    # print("Test Aufgabe 1:")
+    # print(empty_grid())
 
-    print("Test Aufgabe 2:")
-    print_grid(EXAMPLE_GRID_1)
-    print_grid(EXAMPLE_GRID_2)
-    print_grid(EXAMPLE_GRID_3)
+    # print("Test Aufgabe 2:")
+    # print_grid(EXAMPLE_GRID_1)
+    # print_grid(EXAMPLE_GRID_2)
+    # print_grid(EXAMPLE_GRID_3)
 
     # print("Test Aufgabe 3:")
     # print(get_column(0, EXAMPLE_GRID_3))
@@ -318,6 +359,8 @@ if __name__ == "__main__":
     # print(all_elements_equal([1, 1, 1]))
     # print(all_elements_equal([True, True, True]))
     # print(all_elements_equal([False, False, False]))
+    # print(all_elements_equal("hallo"))
+    # print(all_elements_equal(False))
 
     # print("Test Aufgabe 8:")
     # print(player_has_won(EXAMPLE_GRID_1))
@@ -333,5 +376,5 @@ if __name__ == "__main__":
     # print(next_player(1))
     # print(next_player(2))
 
-    # print("Test Aufgabe 10:")
-    # game_loop()
+    print("Test Aufgabe 10:")
+    game_loop()
